@@ -279,6 +279,3 @@ These came up while testing against the schema script. They are for the team to 
 | `pip install` fails on requirements | Remove any backticks or markdown from `requirements.txt` |
 | Views in MySQL are behind | Normal: the flush runs every 5 s. Make sure the flusher was started |
 
-## 15. AI usage note
-
-This layer was generated with AI (Claude), with the professor's permission given in class for the Redis and Cassandra parts, then tested on a real Redis 7 and a real MySQL-compatible server. Record the prompts and the references in `AI_PROMPTS.md`, as the project guide requires.
