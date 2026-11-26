@@ -113,16 +113,3 @@ The code now targets the team's real MySQL schema (database `youtube`). See `REA
 
 ## 9. Plugging it into the API
 See `README.md`, section 6. The database settings come from environment variables (`DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`).
-
-## 10. Questions the professor may ask
-- **Why Redis here?** Metadata is read far more than written; counters change thousands of times per second. Memory is the right place for both.
-- **Why a Lua script?** Redis executes one script at a time, so "check then change" cannot be interleaved. That is atomicity.
-- **What if Redis crashes?** AOF replays the log; counters come back. If a counter is still missing, `warm_stats` rebuilds it from MySQL.
-- **What if MySQL is down during a flush?** Videos stay in `stats:dirty`; the next flush retries.
-- **What is eventual consistency here?** MySQL can lag Redis by up to ~5 s. Redis is the live value, MySQL the durable one.
-- **Why `{42}`?** Hash tag: all keys of a video on one cluster node.
-- **What is a cache stampede?** Many simultaneous misses on the same key. Solved by the lock + jitter.
-- **CAP?** A counter that is slightly stale but always available (AP side) is acceptable for views/likes, not for money.
-
-## 11. AI_PROMPTS.md
-This Redis layer was generated with AI, with the professor's permission given in class (Redis/Cassandra are not studied yet). Record the prompts, and the references you read (redis.io pages for `SET`, hashes, `EVAL`, persistence, eviction), in `AI_PROMPTS.md`.
