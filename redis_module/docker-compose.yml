@@ -1,0 +1,15 @@
+# Starts a single Redis 7 server configured by redis.conf.
+#   docker compose up -d
+#   docker compose exec redis redis-cli
+services:
+  redis:
+    image: redis:7
+    container_name: yt-redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - redis-data:/data          # AOF/RDB files live here, so they survive container restarts
+volumes:
+  redis-data:

@@ -1,0 +1,4 @@
+redis>=5.0
+pymysql>=1.1        # only needed for MySQLRepository (VTGate)
+pytest>=8.0         # tests
+fakeredis[lua]>=2.23  # tests (in-memory Redis with Lua support)
