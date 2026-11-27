@@ -1,0 +1,13 @@
+{
+  "sharded": false,
+  "tables": {
+    "users": {},
+    "channels": {},
+    "categories": {},
+    "tags": {},
+    "subscriptions": {},
+    "video_seq": {
+      "type": "sequence"
+    }
+  }
+}

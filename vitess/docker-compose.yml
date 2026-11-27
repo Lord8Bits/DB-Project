@@ -1,0 +1,22 @@
+services:
+  vitess:
+    image: vitess/vttestserver:mysql84
+    container_name: yt-vitess
+    ports:
+      - "15000:15000"   # Vitess /debug/status web UI
+      - "15001:15001"   # vtctld gRPC admin port
+      - "15003:15003"   # VTGate MySQL protocol port (Backend API connects here)
+    environment:
+      PORT: "15000"
+      KEYSPACES: "yt_core,yt_videos"
+      NUM_SHARDS: "1,2"
+      MYSQL_BIND_HOST: "0.0.0.0"
+      VTCOMBO_BIND_HOST: "0.0.0.0"
+      FOREIGN_KEY_MODE: "allow"
+      ENABLE_DIRECT_DDL: "true"
+      PLANNER_VERSION: "Gen4"
+    healthcheck:
+      test: ["CMD-SHELL", "mysql -h 127.0.0.1 -P 15003 -u root -e 'SELECT 1' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20

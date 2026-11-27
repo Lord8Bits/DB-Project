@@ -1,0 +1,3 @@
+- Startup Commands: Inside vitess/, run docker compose up -d followed by chmod +x init_vitess.sh && ./init_vitess.sh (the live status dashboard runs at http://localhost:15000/debug/status).
+- Database Connection: The Backend API connects to VTGate using any standard MySQL client at host 127.0.0.1 (or Docker service name vitess), port 15003, user root, with an empty password.
+- Table & Column Alignment: Unsharded tables (users, channels, categories, tags, subscriptions) reside in yt_core; sharded tables (videos, video_tag, channel_video_lookup, categories) reside in yt_videos using columns video_id, channel_id, category_id, video_name, description, vid_length, thumbnail, view_cnt, like_cnt, and upload_date.

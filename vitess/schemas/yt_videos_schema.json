@@ -1,0 +1,54 @@
+{
+  "sharded": true,
+  "vindexes": {
+    "xxhash": {
+      "type": "xxhash"
+    },
+    "channel_video_lookup": {
+      "type": "consistent_lookup",
+      "params": {
+        "table": "yt_videos.channel_video_lookup",
+        "from": "channel_id,video_id",
+        "to": "keyspace_id"
+      },
+      "owner": "videos"
+    }
+  },
+  "tables": {
+    "videos": {
+      "column_vindexes": [
+        {
+          "column": "video_id",
+          "name": "xxhash"
+        },
+        {
+          "columns": ["channel_id", "video_id"],
+          "name": "channel_video_lookup"
+        }
+      ],
+      "auto_increment": {
+        "column": "video_id",
+        "sequence": "yt_core.video_seq"
+      }
+    },
+    "video_tag": {
+      "column_vindexes": [
+        {
+          "column": "video_id",
+          "name": "xxhash"
+        }
+      ]
+    },
+    "channel_video_lookup": {
+      "column_vindexes": [
+        {
+          "column": "channel_id",
+          "name": "xxhash"
+        }
+      ]
+    },
+    "categories": {
+      "type": "reference"
+    }
+  }
+}
